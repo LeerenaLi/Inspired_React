@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
-export const Footer = ({list}) => {
+export const Footer = () => {
     const { genderList, categories } = useSelector(state => state.navigation);
 
     return (
@@ -19,7 +19,7 @@ export const Footer = ({list}) => {
                             {genderList.map((gender) => (
                                 <li key={gender} className={s.categoryItem}>
                                     <h3 className={s.categorySubtitle}>
-                                        <NavLink to={gender} className={s.link}
+                                        <NavLink to={`/catalog/${gender}`} className={s.link}
                                         >
                                         {categories[gender].title}
                                         </NavLink>
@@ -28,7 +28,7 @@ export const Footer = ({list}) => {
                                     <ul className={s.categorySublist}>
                                         {categories[gender].list.map(category => (
                                             <li key={category.slug}>
-                                                <NavLink className={s.link} to={`${gender}/${category.slug}`}>
+                                                <NavLink className={s.link} to={`/catalog/${gender}/${category.slug}`}>
                                                     {category.title}
                                                 </NavLink>
                                             </li>

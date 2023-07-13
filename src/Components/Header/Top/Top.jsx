@@ -2,15 +2,16 @@ import { Container } from '../../Layout/Container/Container';
 import s from './Top.module.scss';
 import cn from 'classnames';
 import logo from '/src/assets/logo.svg';
+import { NavLink } from 'react-router-dom';
 
 export const Top = () => (
     <div className={s.top}>
         <Container className={s.topContainer}>
             <a className={cn(s.topLink, s.topPhone)} href='tel:89304902620'>8 930 490 26 20</a>
 
-            <a className={s.logo} href='/'>
+            <NavLink className={s.logo} to='/'>
                 <img src={logo} className={s.topLogo} alt='Логотип Inspired' />
-            </a>
+            </NavLink>
 
             <div className={s.topNavigation}>
                 <ul className={s.topNavList}>
