@@ -1,4 +1,5 @@
 import { Container } from '../../Layout/Container/Container.jsx';
+import { Order } from '../Order/Order.jsx';
 import s from './Cart.module.scss';
 import { CartItem } from './CartItem/CartItem.jsx';
 
@@ -30,7 +31,7 @@ export const Cart = ({cartItems, goodsList}) => {
                         ))}
                     </ul>
                     :
-                    <h3>В корзине пусто</h3>
+                    <h3 className={s.empty}>В корзине пусто</h3>
                 }
                 <div className={s.total}>
                     <p>Итого: </p>

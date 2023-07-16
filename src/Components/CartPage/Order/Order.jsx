@@ -1,6 +1,11 @@
-export const Order = () => {
+import { Container } from "../../Layout/Container/Container"
 
+export const Order = () => {
     return (
-        <div>Order</div>
+        <section>
+            <Container>
+                <div>Order</div>
+            </Container>
+        </section>
     )
 }
