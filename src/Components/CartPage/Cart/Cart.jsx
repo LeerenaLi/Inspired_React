@@ -1,5 +1,4 @@
 import { Container } from '../../Layout/Container/Container.jsx';
-import { Order } from '../Order/Order.jsx';
 import s from './Cart.module.scss';
 import { CartItem } from './CartItem/CartItem.jsx';
 

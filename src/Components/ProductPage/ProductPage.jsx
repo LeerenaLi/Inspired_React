@@ -41,7 +41,7 @@ export const ProductPage = () => {
     }
 
     const handleSizeChange = (e) => {
-        setSelectedSize(e.target.value);
+       setSelectedSize(e.target.value);
     }
 
     useEffect(() => {
