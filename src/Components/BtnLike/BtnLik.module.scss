@@ -1,0 +1,14 @@
+.like {
+    transition: 0.2s ease-in-out;
+    &:hover {
+        color: tomato;
+    }
+  
+    &:active {
+      color: red;
+    }
+}
+
+.active {
+    color: red;
+}

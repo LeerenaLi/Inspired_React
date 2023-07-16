@@ -35,6 +35,11 @@ const goodsSlice = createSlice({
         pages: 0,
         totalCount: null,
     },
+    reducers: {
+        setPage: (state, action) => {
+            state.page = action.payload;
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchGender.pending , (state) => {
@@ -43,6 +48,8 @@ const goodsSlice = createSlice({
             .addCase(fetchGender.fulfilled , (state, action) => {
                 state.status = 'success';
                 state.goodsList = action.payload;
+                state.pages = 0;
+                state.totalCount = null;
             })
             .addCase(fetchGender.rejected , (state, action) => {
                 state.status = 'failed';
@@ -54,7 +61,6 @@ const goodsSlice = createSlice({
             .addCase(fetchCategory.fulfilled , (state, action) => {
                 state.status = 'success';
                 state.goodsList = action.payload.goods;
-                state.page = action.payload.page;
                 state.pages = action.payload.pages;
                 state.totalCount = action.payload.totalCount;
             })
@@ -65,4 +71,5 @@ const goodsSlice = createSlice({
     }
 });
 
+export const {setPage} = goodsSlice.actions;
 export default goodsSlice.reducer;
