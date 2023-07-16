@@ -12,12 +12,15 @@ import { ProductSize } from '../ProductSize/ProductSize';
 import { Goods } from '../Goods/Goods';
 import { fetchCategory } from '../../features/goodsSlice';
 import { BtnLike } from '../BtnLike/BtnLike';
+import { addToCart } from '../../features/cartSlice';
 
 export const ProductPage = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const {product} = useSelector(state => state.product);
-    const {gender, category} = product;
+    const {gender, category, colors} = product;
+
+    const { colorList } = useSelector(state => state.color);
 
     const [count, setCount] = useState(1);
     const [selectedColor, setSelectedColor] = useState('');
@@ -49,6 +52,12 @@ export const ProductPage = () => {
         dispatch(fetchProduct(id));
     }, [id, dispatch]);
 
+    useEffect(() => {
+        if (colorList?.length && colors?.length) {
+            setSelectedColor(colorList.find(color => color.id === colors[0]).title)
+        }
+    }, [colorList, colors]);
+
     return (
        <>
          <section className={s.card}>
@@ -58,7 +67,15 @@ export const ProductPage = () => {
                     src={`${API_URL}${product.pic}`}
                     alt={`${product.title}`}
                 />
-                <form className={s.content}>
+                <form className={s.content} onSubmit={e => {
+                    e.preventDefault();
+                    dispatch(addToCart({
+                        id,
+                        color: selectedColor,
+                        size: selectedSize,
+                        count,
+                    }))
+                }}>
                     <h2 className={s.title}>{product.title}</h2>
                     <p className={s.price}>руб {product.price}</p>
 
@@ -70,7 +87,7 @@ export const ProductPage = () => {
                     <div className={s.color}>
                         <p className={cn(s.subtitle, s.colorTitle)}>Цвет</p>
                         <ColorList
-                            colors={product.colors}
+                            colors={colors}
                             selectedColor={selectedColor}
                             handleColorChange={handleColorChange}
                         />
@@ -96,12 +113,7 @@ export const ProductPage = () => {
 
                         <button className={s.addCart} type='submit'>В корзину</button>
 
-                        <button className={s.favorite}
-                            aria-label='Добавить в избранное'
-                            type='button'
-                        >
-                            <BtnLike id={id} />
-                        </button>
+                        <BtnLike id={id} />
                     </div>
                 </form>
             </Container>
