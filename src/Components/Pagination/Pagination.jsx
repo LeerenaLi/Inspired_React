@@ -3,9 +3,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import s from './Pagintaion.module.scss';
 import cn from "classnames";
 import { useEffect, useState } from "react";
+import { ReactComponent as PrevSVG} from "../../assets/arrow-prev.svg";
+import { ReactComponent as NextSVG} from "../../assets/arrow-next.svg";
 
 export const Pagination = () => {
-    const [pagePagination, setPagePagination] = useState('');
+    const [pagePagination, setPagePagination] = useState(1);
     const pathname = useLocation().pathname;
     const {page, pages} = useSelector(state => state.goods);
 
@@ -41,7 +43,7 @@ export const Pagination = () => {
                 <li key={i} className={s.item}>
                     <NavLink
                         to={`${pathname}?page=${i}`}
-                        className={cn(s.link, i === pagePagination ?? s.linkActive)}
+                        className={cn(s.link, i === pagePagination && s.linkActive)}
                         onClick={() => handlePageChange(i)}
                     >
                         {i}
@@ -60,7 +62,7 @@ export const Pagination = () => {
             onClick={handlePrevPage}
             disabled={pagePagination <= 2}
             >
-                &lt;
+                <PrevSVG />
             </button>
             <ul className={s.list}>{renderPaginationItems()}</ul>
             <button
@@ -68,7 +70,7 @@ export const Pagination = () => {
             onClick={handleNextPage}
             disabled={pagePagination >= pages - 1 || pages <= 3}
             >
-                &gt;
+                <NextSVG />
             </button>
         </div>
     )

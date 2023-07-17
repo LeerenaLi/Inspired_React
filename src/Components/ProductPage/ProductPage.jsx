@@ -25,6 +25,7 @@ export const ProductPage = () => {
     const [count, setCount] = useState(1);
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
+    const [formError, setFormError] = useState(true);
 
     const handleIncrement = () => {
         setCount((prevCount) => prevCount + 1);
@@ -58,6 +59,7 @@ export const ProductPage = () => {
         }
     }, [colorList, colors]);
 
+
     return (
        <>
          <section className={s.card}>
@@ -67,14 +69,23 @@ export const ProductPage = () => {
                     src={`${API_URL}${product.pic}`}
                     alt={`${product.title}`}
                 />
-                <form className={s.content} onSubmit={e => {
+                <form
+                    className={s.content}
+                    onSubmit={e => {
                     e.preventDefault();
-                    dispatch(addToCart({
-                        id,
-                        color: selectedColor,
-                        size: selectedSize,
-                        count,
-                    }))
+                    if (count && selectedColor && selectedSize) {
+                        setFormError(true);
+                        dispatch(
+                            addToCart({
+                                id,
+                                color: selectedColor,
+                                size: selectedSize,
+                                count,
+                            }),
+                        );
+                    } else {
+                        setFormError(false);
+                    }
                 }}>
                     <h2 className={s.title}>{product.title}</h2>
                     <p className={s.price}>руб {product.price}</p>
@@ -102,7 +113,7 @@ export const ProductPage = () => {
                         <p className={cn(s.subtitle, s.descriptionTitle)}>Описание</p>
                         <p className={s.descriptonText}>{product.descripton}</p>
                     </div>
-
+                    {!formError ? <p className={s.error}>Выберите цвет и размер</p> : ''}
                     <div className={s.control}>
                         <Count
                             className={s.count}
